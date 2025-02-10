@@ -3,19 +3,36 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-roboto: "Roboto", sans-serif;
+  --font-ibm-plex: "IBM Plex Sans", sans-serif;
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-roboto);
+}
+
+h1 {
+  font-family: var(--font-ibm-plex);
+}
+
+.card-shadow {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+@layer utilities {
+  .login-bg-lining {
+    @apply absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#f0f0f0_1px,transparent_1px),linear-gradient(to_bottom,#f0f0f0_1px,transparent_1px)] bg-[size:6rem_4rem];
+  }
+
+  .login-bg-glow {
+    @apply absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)];
+  }
+
+  .padding {
+    @apply py-5 px-2;
+  }
+
+  .sub-heading {
+    @apply text-xl font-semibold text-gray-600;
+  }
 }
