@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import React from "react";
 import { signIn } from "../utils/auth";
+import { Button } from "@/components/ui/button";
 
 const Login = () => {
   return (
@@ -34,9 +35,9 @@ const Login = () => {
           </CardHeader>
           <CardContent>
             <form
-              action={async () => {
+              action={async (formData) => {
                 "use server";
-                await signIn();
+                await signIn("nodemailer", formData);
               }}
               className="flex flex-col gap-y-4"
             >
@@ -49,7 +50,7 @@ const Login = () => {
                   placeholder="hello@hello.com"
                 />
               </div>
-              {/* <SubmitButton text="Login" /> */}
+              <Button type="submit">Submit</Button>
             </form>
           </CardContent>
         </Card>
