@@ -1,6 +1,6 @@
 import { Webhook } from "svix";
 import { headers } from "next/headers";
-import { WebhookEvent } from "@clerk/nextjs/server";
+import { WebhookEvent, UserJSON } from "@clerk/nextjs/server";
 import prisma from "@/app/utils/prisma";
 
 export async function POST(req: Request) {
@@ -42,15 +42,20 @@ export async function POST(req: Request) {
     return new Response("Error: Verification error", { status: 400 });
   }
 
-  // Handle events
-  const { id, primary_email_address_id, first_name, last_name, email_addresses } = evt.data as any;
-  const eventType = evt.type;
+  // Type assertion: Ensure we are handling user events only
+  if (!("data" in evt) || !evt.data || evt.object !== "event") {
+    console.error("Invalid event data received");
+    return new Response("Invalid event data", { status: 400 });
+  }
 
-  // Get the primary email from email_addresses array
-  const email = email_addresses?.find((email: any) => email.id === primary_email_address_id)?.email_address || null;
+  const userData = evt.data as UserJSON; // Explicitly define user type
+  const { id, primary_email_address_id, first_name, last_name, email_addresses } = userData;
+
+  // Find the user's primary email
+  const email = email_addresses.find((email) => email.id === primary_email_address_id)?.email_address || null;
 
   try {
-    switch (eventType) {
+    switch (evt.type) {
       case "user.created":
         await prisma.user.create({
           data: {
@@ -80,7 +85,7 @@ export async function POST(req: Request) {
         break;
 
       default:
-        console.log(`Unhandled event type: ${eventType}`);
+        console.log(`Unhandled event type: ${evt.type}`);
     }
   } catch (error) {
     console.error("Database update failed:", error);
