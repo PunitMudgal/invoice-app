@@ -44,6 +44,7 @@ export async function POST (request: Request, {params,}: {params: Promise<{invoi
       return NextResponse.json({ success: true });
 
     }  catch (error) {
+      console.log(error)
         return NextResponse.json(
           { error: "Failed to send Email reminder" },
           { status: 500 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useState } from "react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
@@ -30,7 +30,6 @@ import { parseWithZod } from "@conform-to/zod";
 import { invoiceSchema } from "../utils/zodSchemas";
 import { createInvoice } from "../actions";
 import { useUser } from "@clerk/nextjs";
-import { toast } from "sonner";
 
 const CreateInvoice = () => {
   const { user } = useUser();
@@ -296,7 +295,7 @@ const CreateInvoice = () => {
                 <Input
                   value={formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                   disabled
                 />
@@ -311,7 +310,7 @@ const CreateInvoice = () => {
                 <span>
                   {formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                 </span>
               </div>
@@ -320,7 +319,7 @@ const CreateInvoice = () => {
                 <span className="font-medium text-red-600">
                   {formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                 </span>
               </div>

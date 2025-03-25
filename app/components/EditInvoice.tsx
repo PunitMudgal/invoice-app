@@ -30,7 +30,7 @@ import { Badge } from "@/components/ui/badge";
 import { editInvoice } from "../actions";
 
 interface iAppProps {
-  data: Prisma.InvoiceGetPayload<{}>;
+  data: Prisma.InvoiceGetPayload<true>;
 }
 
 const EditInvoice = ({ data }: iAppProps) => {
@@ -297,7 +297,7 @@ const EditInvoice = ({ data }: iAppProps) => {
                 <Input
                   value={formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                   disabled
                 />
@@ -312,7 +312,7 @@ const EditInvoice = ({ data }: iAppProps) => {
                 <span>
                   {formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                 </span>
               </div>
@@ -321,7 +321,7 @@ const EditInvoice = ({ data }: iAppProps) => {
                 <span className="font-medium underline underline-offset-2">
                   {formatCurrency({
                     amount: calcualteTotal,
-                    currency: currency as any,
+                    currency: currency as "INR" | "USD" | "EUR",
                   })}
                 </span>
               </div>

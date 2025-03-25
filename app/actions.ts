@@ -10,7 +10,7 @@ import { revalidatePath } from "next/cache";
 import { emailClient } from "./utils/mailtrap";
 import { toast } from "sonner";
 
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function getInvoices(userId: string){
   const data = await prisma.invoice.findMany({
     where: {
@@ -149,7 +149,7 @@ export async function editInvoice(prevState: any, formData: FormData) {
 
   emailClient.send({
     from: sender,
-    to: [{ email:  "ssmudgal01@gmail.com" }],
+    to: [{ email: submission.value.clientEmail|| "ssmudgal01@gmail.com"  }],
     template_uuid: "ac5a924e-0404-4f30-a8b1-687f3d6d4be1",
     template_variables: {
       clientName: submission.value.clientName,
@@ -170,6 +170,8 @@ export async function editInvoice(prevState: any, formData: FormData) {
 
   return redirect("/dashboard/invoices");
 }
+
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export async function DeleteInvoice(invoiceId: string) {
   const user = await currentUser();

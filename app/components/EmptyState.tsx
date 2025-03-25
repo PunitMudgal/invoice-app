@@ -1,7 +1,5 @@
-import React from "react";
-import { Ban, PlusCircle } from "lucide-react";
+import { Ban } from "lucide-react";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 
 const EmptyState = () => {
   return (

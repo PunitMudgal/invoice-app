@@ -8,12 +8,12 @@ import {
 } from "@/components/ui/table";
 import React from "react";
 import InvoiceMenuActions from "./InvoiceMenuActions";
-import prisma from "../utils/prisma";
 import { currentUser } from "@clerk/nextjs/server";
 import { getInvoices } from "../actions";
 import { formatCurrency } from "../utils/formatCurrency";
 import { Badge } from "@/components/ui/badge";
 import EmptyState from "./EmptyState";
+import { redirect } from "next/navigation";
 
 // async function getData(userId: string) {
 //   const data = await prisma.invoice.findMany({
@@ -39,8 +39,9 @@ import EmptyState from "./EmptyState";
 
 const InvoiceList = async () => {
   const user = await currentUser();
+  if (!user) return redirect("/sign-in");
 
-  const data = await getInvoices(user?.id as string);
+  const data = await getInvoices(user.id as string);
 
   return (
     <>
@@ -66,7 +67,7 @@ const InvoiceList = async () => {
                 <TableCell>
                   {formatCurrency({
                     amount: invoice.total,
-                    currency: invoice.currency as any,
+                    currency: invoice.currency as "INR" | "USD" | "EUR",
                   })}
                 </TableCell>
                 <TableCell>

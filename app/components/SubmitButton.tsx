@@ -3,7 +3,6 @@
 import { useFormStatus } from "react-dom";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { it } from "node:test";
 
 interface iAppProps {
   text: string;
