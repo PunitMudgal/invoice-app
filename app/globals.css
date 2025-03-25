@@ -29,11 +29,15 @@ h1 {
   }
 
   .login-bg-glow {
-    @apply absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#C9EBFF,transparent)];
+    @apply absolute bottom-0 left-0 right-0 top-0 bg-[radial-gradient(circle_500px_at_50%_200px,#efc5fc,transparent)];
   }
 
   .padding {
     @apply py-5 px-2;
+  }
+
+  .cl-userButton-name {
+    @apply text-blue-500; /* Change color using Tailwind */
   }
 
   .sub-heading {

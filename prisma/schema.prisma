@@ -108,7 +108,7 @@ model Invoice {
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
-  User      User?    @relation(fields: [userId], references: [id])
+  User      User?    @relation(fields: [userId], references: [clerkId]) //* this `fields: [userId]` shows that below userId will be used as reference and it contains clerkId
   userId    String?
 }
 
