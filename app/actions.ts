@@ -203,7 +203,7 @@ export async function DeleteInvoice(invoiceId: string) {
 export async function MarkAsPaidAction(invoiceId: string) {
   const user = await currentUser();
 
-  const data = await prisma.invoice.update({
+   await prisma.invoice.update({
     where: {
       userId: user?.id,
       id: invoiceId,

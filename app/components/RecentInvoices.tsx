@@ -54,7 +54,7 @@ const RecentInvoices = async ({ userId }: iAppProps) => {
               +
               {formatCurrency({
                 amount: item.total,
-                currency: item.currency as any,
+                currency: item.currency as "INR" | "USD" | "EUR",
               })}
             </div>
           </div>
