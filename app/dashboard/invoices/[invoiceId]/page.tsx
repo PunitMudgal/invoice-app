@@ -3,7 +3,7 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/app/utils/prisma";
 import { notFound } from "next/navigation";
 
-interface PageProps {
+export interface PageProps {
   params: {
     invoiceId: string;
   };
