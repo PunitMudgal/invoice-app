@@ -1,14 +1,12 @@
-"use client";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Menu } from "lucide-react";
 import { UserButton } from "@clerk/nextjs";
 import DashboardLinks from "./DashboardLinks";
-import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import DarkModeBtn from "./DarkModeBtn";
 
 const Header = () => {
-  const { theme, setTheme } = useTheme();
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
       <Sheet>
@@ -24,23 +22,11 @@ const Header = () => {
         </SheetContent>
       </Sheet>
 
-      <div className="scale-125 ml-auto space-x-2 ">
+      <div className="scale-125 ml-auto flex gap-2 items-center">
         <UserButton showName />
 
         {/* Dark Mode btn */}
-        <Button variant="outline" asChild size="icon" className="">
-          {theme === "dark" ? (
-            <Sun
-              onClick={() => setTheme("light")}
-              className=" h-[25px] w-[25px]  "
-            />
-          ) : (
-            <Moon
-              onClick={() => setTheme("dark")}
-              className=" h-[25px] w-[25px]  "
-            />
-          )}
-        </Button>
+        <DarkModeBtn />
       </div>
     </header>
   );

@@ -9,13 +9,19 @@ import Graph from "./Graph";
 import prisma from "../utils/prisma";
 
 async function getInvoices(userId: string) {
+  const now = new Date();
+  const thirtyDaysAgo = new Date();
+  thirtyDaysAgo.setDate(now.getDate() - 30);
+  thirtyDaysAgo.setUTCHours(0, 0, 0, 0);
+  now.setUTCHours(23, 59, 59, 999);
+
   const rawData = await prisma.invoice.findMany({
     where: {
       status: "PAID",
       userId: userId,
       createdAt: {
-        lte: new Date(),
-        gte: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+        lte: now,
+        gte: thirtyDaysAgo,
       },
     },
     select: {
@@ -27,32 +33,34 @@ async function getInvoices(userId: string) {
     },
   });
 
-  //Group and aggregate data by date
+  console.log("rawData", rawData);
+
+  // Group and aggregate data by date
   const aggregatedData = rawData.reduce(
     (acc: { [key: string]: number }, curr) => {
-      const date = new Date(curr.createdAt).toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
+      const dateObj = new Date(curr.createdAt);
+      const dateKey = dateObj.toISOString().split("T")[0]; // YYYY-MM-DD
 
-      acc[date] = (acc[date] || 0) + curr.total;
-
+      acc[dateKey] = (acc[dateKey] || 0) + (curr.total ?? 0);
       return acc;
     },
     {}
   );
-  //Convert to array and from the object
+
+  // Convert to sorted array
   const transformedData = Object.entries(aggregatedData)
     .map(([date, amount]) => ({
       date,
       amount,
-      originalDate: new Date(date + ", " + new Date().getFullYear()),
+      originalDate: new Date(date),
     }))
     .sort((a, b) => a.originalDate.getTime() - b.originalDate.getTime())
     .map(({ date, amount }) => ({
       date,
       amount,
     }));
+
+  console.log("transform data", transformedData);
 
   return transformedData;
 }
@@ -63,6 +71,7 @@ interface iAppProps {
 
 const InvoiceGraph = async ({ userId }: iAppProps) => {
   const data = await getInvoices(userId);
+  console.log("data", data);
 
   return (
     <Card className="lg:col-span-2">
