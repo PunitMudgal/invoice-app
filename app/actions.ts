@@ -10,7 +10,6 @@ import { revalidatePath } from "next/cache";
 import { emailClient } from "./utils/mailtrap";
 import { toast } from "sonner";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 export async function getInvoices(userId: string){
   const data = await prisma.invoice.findMany({
     where: {
@@ -171,13 +170,12 @@ export async function editInvoice(prevState: any, formData: FormData) {
   return redirect("/dashboard/invoices");
 }
 
-/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export async function DeleteInvoice(invoiceId: string) {
   const user = await currentUser();
   if (!user) {
-    throw new Error("User not authenticated");
     toast.error("Not authorized")
+    throw new Error("User not authenticated");
   }
 
   // Check if invoice exists & belongs to the user
