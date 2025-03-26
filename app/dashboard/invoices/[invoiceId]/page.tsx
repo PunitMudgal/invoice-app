@@ -3,12 +3,10 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/app/utils/prisma";
 import { notFound } from "next/navigation";
 
-interface Params {
-  invoiceId: string;
-}
-
 interface PageProps {
-  params: Params;
+  params: {
+    invoiceId: string;
+  };
 }
 
 async function getData(invoiceId: string, userId: string) {
@@ -26,11 +24,7 @@ async function getData(invoiceId: string, userId: string) {
   return data;
 }
 
-const EditInvoiceRoute = async ({
-  params,
-}: {
-  params: { invoiceId: string };
-}) => {
+const EditInvoiceRoute = async ({ params }: PageProps) => {
   const { invoiceId } = params;
   const { userId } = await auth();
 
