@@ -7,6 +7,7 @@ export interface PageProps {
   params: {
     invoiceId: string;
   };
+  searchParams: Record<string, string | string[] | undefined>;
 }
 
 async function getData(invoiceId: string, userId: string) {
