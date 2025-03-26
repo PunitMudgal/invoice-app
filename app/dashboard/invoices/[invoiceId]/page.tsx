@@ -25,12 +25,10 @@ async function getData(invoiceId: string, userId: string) {
   return data;
 }
 
-const EditInvoiceRoute = async ({
-  params,
-}: {
-  params: { invoiceId: string };
-}) => {
-  const { invoiceId } = params;
+type Params = Promise<{ invoiceId: string }>;
+
+const EditInvoiceRoute = async ({ params }: { params: Params }) => {
+  const { invoiceId } = await params;
   const { userId } = await auth();
 
   if (!userId) {
