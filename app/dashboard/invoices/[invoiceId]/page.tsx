@@ -3,6 +3,14 @@ import { auth } from "@clerk/nextjs/server";
 import prisma from "@/app/utils/prisma";
 import { notFound } from "next/navigation";
 
+type Params = {
+  invoiceId: string;
+};
+
+type PageProps = {
+  params: Params;
+};
+
 async function getData(invoiceId: string, userId: string) {
   const data = await prisma.invoice.findUnique({
     where: {
@@ -18,13 +26,10 @@ async function getData(invoiceId: string, userId: string) {
   return data;
 }
 
-type Params = {
-  invoiceId: string;
-};
-
-const EditInvoiceRoute = async ({ params }: { params: Params }) => {
+const EditInvoiceRoute = async ({ params }: PageProps) => {
   const { invoiceId } = params;
   const { userId } = await auth();
+
   if (!userId) {
     notFound();
   }
