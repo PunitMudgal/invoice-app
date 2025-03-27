@@ -26,17 +26,17 @@ import { CalendarIcon } from "lucide-react";
 
 import { useForm } from "@conform-to/react";
 import { parseWithZod } from "@conform-to/zod";
-// import { createInvoice } from "../actions";
 import { invoiceSchema } from "../utils/zodSchemas";
 import { createInvoice } from "../actions";
 import { useUser } from "@clerk/nextjs";
+import type { SubmissionResult } from "@conform-to/react";
 
 const CreateInvoice = () => {
   const { user } = useUser();
 
   const [lastResult, action] = useActionState(createInvoice, undefined);
   const [form, fields] = useForm({
-    lastResult,
+    lastResult: lastResult as SubmissionResult<string[]> | undefined,
     onValidate({ formData }) {
       return parseWithZod(formData, {
         schema: invoiceSchema,

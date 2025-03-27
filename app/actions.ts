@@ -97,10 +97,16 @@ export async function createInvoice(prevState: any, formData: FormData) {
   });
 
   revalidatePath("/dashboard/invoices");
-  return { success: true};
+  return {
+    status: "success",
+    value: "invoice created successfully"
+  }
 } catch (error) {
   console.error("Error creating invoice:", error);
-  return { success: false};
+  return { status: "error",
+  error: {
+    message: "Failed to create invoice"
+  }};
 }
 }
 

@@ -33,8 +33,6 @@ async function getInvoices(userId: string) {
     },
   });
 
-  console.log("rawData", rawData);
-
   // Group and aggregate data by date
   const aggregatedData = rawData.reduce(
     (acc: { [key: string]: number }, curr) => {
@@ -60,8 +58,6 @@ async function getInvoices(userId: string) {
       amount,
     }));
 
-  console.log("transform data", transformedData);
-
   return transformedData;
 }
 
@@ -71,7 +67,6 @@ interface iAppProps {
 
 const InvoiceGraph = async ({ userId }: iAppProps) => {
   const data = await getInvoices(userId);
-  console.log("data", data);
 
   return (
     <Card className="lg:col-span-2">
