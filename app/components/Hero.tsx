@@ -3,7 +3,9 @@ import GetStartedBtn from "./GetStartedBtn";
 import { TypingAnimation } from "@/components/magicui/typing-animation";
 import Link from "next/link";
 import Image from "next/image";
-import HeroImage from "@/public/assets/hero.png";
+import HeroImage from "@/public/assets/hero.jpeg";
+import { MarqueeDemo } from "./Reviews";
+import Footer from "./Footer";
 
 interface NavbarProps {
   userId: string | null;
@@ -45,6 +47,11 @@ const Hero = ({ userId }: NavbarProps) => {
             className="relative object-cover w-full border rounded-lg lg:rounded-2xl shadow-2xl"
           />
         </div>
+        <div className="max-w-full">
+          <h2 className="text-2xl font-thin">Reviews</h2>
+          <MarqueeDemo />
+        </div>
+        <Footer />
       </section>
     </>
   );

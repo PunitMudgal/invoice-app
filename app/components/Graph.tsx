@@ -20,7 +20,7 @@ const Graph = ({ data }: iAppProps) => {
       config={{
         amount: {
           label: "Amount",
-          // color: "hsl(var(--primary))",
+          color: "hsl(var(--primary))",
         },
       }}
       className="min-h-[300px]" // todo min tha yaha

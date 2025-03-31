@@ -8,6 +8,7 @@ const Logo = () => {
   const { theme } = useTheme();
   return (
     <Image
+      priority
       src={logo}
       alt="Logo"
       className={`h-auto w-52  ${theme === "dark" ? "invert" : ""}`}
